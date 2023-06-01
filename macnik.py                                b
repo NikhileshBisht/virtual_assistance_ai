@@ -3,6 +3,10 @@ import pyttsx3
 import pywhatkit
 import datetime
 import wikipedia
+import cv2
+import pyjokes
+
+
 
 listerner = sr.Recognizer()
 engine = pyttsx3.init()
@@ -10,6 +14,9 @@ voices = engine.getProperty('voices')
 
 engine.setProperty('voice', voices[1].id)
 
+def intro():
+    talk('my name is nikki i am your personalized ai i can play song,       tell you time or weather temperature,      open camera for you or       make you laugh on my jokes and     tell you anything about persons you want to know ')
+    
 
 def talk(text):
  engine.say(text)
@@ -46,12 +53,40 @@ def run_nikki():
         info = wikipedia.summary(person, 2)
         print(info)
         talk(info)
-    elif 'exit' in command:
-        return False    
+    elif 'camera' in command:
+        cap=cv2.VideoCapture(0)
+ 
+        while True:
+  
+          ret,img=cap.read()
+          cv2.imshow('webcam',img)
+          k=cv2.waitKey(10)
+          if k==27:
+              break
+        cap.release()
+        cv2.destroyAllWindows()
+    elif 'joke' in command:
+        My_joke = pyjokes.get_joke(language="en", category="neutral")
+  
+        talk(My_joke)
+    
+      
     else:
         talk('Please say the command again.')
+        
+        
+        
+
    
-while True:    
+
+
+
+intro() 
+X=True 
+while X:    
   run_nikki() 
+
+      
+      
       
       
