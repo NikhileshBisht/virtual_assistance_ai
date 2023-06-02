@@ -5,6 +5,8 @@ import datetime
 import wikipedia
 import cv2
 import pyjokes
+import subprocess as sp
+import random
 
 
 
@@ -15,7 +17,7 @@ voices = engine.getProperty('voices')
 engine.setProperty('voice', voices[1].id)
 
 def intro():
-    talk('my name is nikki i am your personalized ai i can play song,       tell you time or weather temperature,      open camera for you or       make you laugh on my jokes and     tell you anything about persons you want to know ')
+    talk('my name is nikki i am your personalized ai i can play song,  opening notes,     tell you time or start game,      open camera for you or       make you laugh on my jokes and     tell you anything about persons you want to know ')
     
 
 def talk(text):
@@ -61,6 +63,7 @@ def run_nikki():
           ret,img=cap.read()
           cv2.imshow('webcam',img)
           k=cv2.waitKey(10)
+          talk("press escape to exit camera")
           if k==27:
               break
         cap.release()
@@ -69,8 +72,34 @@ def run_nikki():
         My_joke = pyjokes.get_joke(language="en", category="neutral")
   
         talk(My_joke)
-    
-      
+    elif 'notes' in command:
+        talk("opening notes")
+        programName = "notepad.exe"
+        fileName = "file.txt"
+        sp.Popen([programName, fileName])
+    elif 'game' in command:
+        Count = 0
+        talk("welcome to random game")
+        talk ("you would have 5 guesses")
+        talk("guess between 1-30")
+        num=(random.randint(0,31))
+        talk("enter number to bet ")
+        for i in range(5):
+            real = input( "bet on :=  ") 
+       
+            if int(real) > num:
+                talk("bet low to get the number")
+            elif int(real) < num:
+                talk("bet more to get the number")
+            else :
+                Count =1
+                break
+        talk("THE NUMBER WAS : " + str(num))
+        if Count ==  1:
+           talk("you won ggwp")
+        else:
+           talk("you LOSS") 
+        
     else:
         talk('Please say the command again.')
         
@@ -85,8 +114,3 @@ intro()
 X=True 
 while X:    
   run_nikki() 
-
-      
-      
-      
-      
