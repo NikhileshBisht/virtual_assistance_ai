@@ -9,13 +9,14 @@ import subprocess as sp
 import random
 
 
-
+//to recognize the voice created a listerner
 listerner = sr.Recognizer()
-engine = pyttsx3.init()
+engine = pyttsx3.init()  //use to initialize pyttsx in engine
 voices = engine.getProperty('voices')
+//upper and lower lines are for changing ai voice from male to female
+engine.setProperty('voice', voices[1].id) //voice[i] i decide index of voice
 
-engine.setProperty('voice', voices[1].id)
-
+//intro that ai speaks what can she do for you
 def intro():
     talk('my name is nikki i am your personalized ai i can play song,  opening notes,     tell you time or start game,      open camera for you or       make you laugh on my jokes and     tell you anything about persons you want to know ')
     
@@ -26,9 +27,9 @@ def talk(text):
 #so in this block i made mic as a source and make listern to listern the voice in the form of source
 def take_command():
     try:
-        with sr.Microphone() as source:
+        with sr.Microphone() as source:  //calling microphone as source
            print("listerning....")
-           voice = listerner.listen(source)
+           voice = listerner.listen(source)     //
            command = listerner.recognize_google(voice)
            command = command.lower()
            if 'nikki' in command:
