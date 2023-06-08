@@ -9,19 +9,20 @@ import subprocess as sp
 import random
 
 
-
+// use to recognize the voice
 listerner = sr.Recognizer()
-engine = pyttsx3.init()
+engine = pyttsx3.init()  //initialize pyttsx
+//use to change the ai voice to female voice
 voices = engine.getProperty('voices')
-
 engine.setProperty('voice', voices[1].id)
 
+//what ai can do for you
 def intro():
-    talk('my name is nikki i am your personalized ai i can play song,  opening notes,     tell you time or start game,      open camera for you or       make you laugh on my jokes and     tell you anything about persons you want to know ')
+    talk('my name is alexa i am your personalized ai i can play song,  opening notes,     tell you time or start game,      open camera for you or       make you laugh on my jokes and     tell you anything about persons you want to know ')
     
 
 def talk(text):
- engine.say(text)
+ engine.say(text)  //ai will say the text
  engine.runAndWait()
 #so in this block i made mic as a source and make listern to listern the voice in the form of source
 def take_command():
@@ -29,20 +30,22 @@ def take_command():
         with sr.Microphone() as source:
            print("listerning....")
            voice = listerner.listen(source)
-           command = listerner.recognize_google(voice)
-           command = command.lower()
-           if 'nikki' in command:
-              command = command.replace('nikki','')
+           command = listerner.recognize_google(voice) // convert voice into command text form
+           command = command.lower() // lower case the string so easy to recognize the compare stings
+           //if you call ai by name then only she listern else  ignore
+           if 'alexa' in command:
+              command = command.replace('alexa','')
               print(command)
         
     except:
          pass
     return command
 
-def run_nikki():
+//function to perform tast by ai 
+def run_alexa():
     command = take_command()
     #print(command)
-    if 'play' in command:
+    if 'play' in command: //if play in command( text she will play song and so on for other if else
       song= command.replace('play','')
       talk('playing ' + song)
       pywhatkit.playonyt(song)
@@ -101,7 +104,7 @@ def run_nikki():
            talk("you LOSS") 
         
     else:
-        talk('Please say the command again.')
+        talk('Please say the command again.') //if ai doesn't hear anything 
         
         
         
@@ -110,7 +113,7 @@ def run_nikki():
 
 
 
-intro() 
-X=True 
-while X:    
-  run_nikki() 
+intro()  //ai tells about what she do
+// loop will run again and agian 
+while True:    
+  run_alexa() 
